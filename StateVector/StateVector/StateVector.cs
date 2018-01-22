@@ -166,31 +166,20 @@ namespace StateVector
 
         protected void Init(string head, string tail, string tag, params VEFD[] funcArray)
         {
+            if (head == null)
+                throw new ArgumentNullException(nameof(head));
+            if (tail == null)
+                throw new ArgumentNullException(nameof(tail));
+            if (tag == null)
+                throw new ArgumentNullException(nameof(tag));
+
             foreach (var func in funcArray)
             {
-                if (IsNullArgument(head, tail, tag, func))
-                {
+                if (func == null)
                     throw new ArgumentNullException();
-                }
 
                 m_vectorEventList.Add(new VectorEventBase(head, tail, tag, func));
             }
-        }
-
-        protected bool IsNullArgument(params object[] objArray)
-        {
-            bool ret = false;
-
-            foreach (var obj in objArray)
-            {
-                if (obj == null)
-                {
-                    ret = true;
-                    break;
-                }
-            }
-
-            return ret;
         }
     }
 
