@@ -102,9 +102,7 @@ namespace StateVector
         }
 
         public VectorEventBase()
-        {
-
-        }
+        { }
 
         public VectorEventBase(string head, string tail, VEFD func)
         {
@@ -175,9 +173,7 @@ namespace StateVector
         }
 
         public VectorEvent()
-        {
-
-        }
+        { }
 
         public VectorEvent(string head, string tail, params VEFD[] funcArray)
         {
@@ -280,7 +276,7 @@ namespace StateVector
 
         protected void Init(string head, string tail, string tag, params VEFD[] funcArray)
         {
-            foreach(VEFD func in funcArray)
+            foreach (VEFD func in funcArray)
             {
                 if (IsNullArgument(head, tail, tag, func))
                 {
@@ -295,7 +291,7 @@ namespace StateVector
         {
             bool ret = false;
 
-            foreach(object obj in objArray)
+            foreach (object obj in objArray)
             {
                 if (obj == null)
                 {
@@ -311,11 +307,11 @@ namespace StateVector
     /// <summary>
     /// 本クラスは関数テーブルの使い勝手向上を目的とするクラスである。
     /// コンストラクタで状態変化時に実行する処理を集約して登録する。
-    /// 
+    ///
     /// 関数テーブルでは、組み合わせ増加に応じてテーブルサイズや次元数が増加する。
     /// しかし、実際に使用される状態変化条件は僅かである。
     /// また、条件変更時の書き換え作業が煩雑になる傾向がある。
-    /// 
+    ///
     /// 動的な関数テーブル変更は非推奨。
     /// GUIの状態変化を想定しているため、
     /// 10ミリ秒単位の精度が要求される高速な状態変化の制御には不適切。
@@ -328,7 +324,7 @@ namespace StateVector
         protected string m_stateOld;
         protected string m_listName;
         protected List<VectorEventBase> m_eventList = new List<VectorEventBase>();
-        
+
         public string StateNow
         {
             get
@@ -364,10 +360,8 @@ namespace StateVector
         }
 
         public StateVector()
-        {
+        { }
 
-        }
-        
         public StateVector(string startState, VectorEvent[] eventArray)
         {
             Init(startState, eventArray);
@@ -401,7 +395,7 @@ namespace StateVector
 
         public void GetListInfo()
         {
-            foreach(VectorEventBase ins in m_eventList)
+            foreach (VectorEventBase ins in m_eventList)
             {
                 Debug.Write(m_listName + ":");
                 Debug.WriteLine(GetEventSetting(ins));
@@ -412,7 +406,7 @@ namespace StateVector
         {
             string ret = "";
 
-            ret = ins.Tag + " list[" + ins.Index +"].priority("+ ins.Priority + ") "
+            ret = ins.Tag + " list[" + ins.Index + "].priority(" + ins.Priority + ") "
                 + ins.Head + " -> " + ins.Tail + " , " + ins.Func.Method.Name;
 
             return ret;
@@ -452,7 +446,7 @@ namespace StateVector
             m_stateNow = stateNext;
         }
 
-        protected　List<VectorEventBase> GetHeadAndTali(string stateNow, string stateNext)
+        protected List<VectorEventBase> GetHeadAndTali(string stateNow, string stateNext)
         {
             List<VectorEventBase> ret = new List<VectorEventBase>();
 
