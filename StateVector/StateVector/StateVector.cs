@@ -15,57 +15,21 @@ namespace StateVector
 
     public class VectorEventBase
     {
-        protected string m_head = "";
-        protected string m_tail = "";
-        protected string m_tag = "";
-        protected VEFD m_func;
-        protected int m_listPriority = -1;
-        protected int m_listIndex = -1;
-
-        public string Head
-        {
-            get => m_head;
-            set => m_head = value;
-        }
-
-        public string Tail
-        {
-            get => m_tail;
-            set => m_tail = value;
-        }
-
-        public string Tag
-        {
-            get => m_tag;
-            set => m_tag = value;
-        }
-
-        public VEFD Func
-        {
-            get => m_func;
-            set => m_func = value;
-        }
-
-        public int Priority
-        {
-            get => m_listPriority;
-            set => m_listPriority = value;
-        }
-
-        public int Index
-        {
-            get => m_listIndex;
-            set => m_listIndex = value;
-        }
+        public string Head { get; set; }
+        public string Tail { get; set; }
+        public string Tag { get; set; }
+        public VEFD Func { get; set; }
+        public int Priority { get; set; } = -1;
+        public int Index { get; set; } = -1;
 
         public VectorEventBase()
         { }
 
         public VectorEventBase(string head, string tail, VEFD func)
         {
-            m_head = head;
-            m_tail = tail;
-            m_func = func;
+            Head = head;
+            Tail = tail;
+            Func = func;
         }
 
         public VectorEventBase(string head, string tail, string tag, VEFD func) : this(head, tail, func) => Tag = tag;
@@ -199,24 +163,12 @@ namespace StateVector
     {
         public bool EnableRefreshTrace;
         public bool EnableRegexp;
-        protected string m_stateNow;
-        protected string m_stateOld;
-        protected string m_listName;
         protected List<VectorEventBase> m_eventList = new List<VectorEventBase>();
 
-        public string StateNow
-        {
-            get => m_stateNow;
-            set => m_stateNow = value;
-        }
+        public string StateNow { get; set; }
+        public string StateOld { get; private set; }
 
-        public string StateOld => m_stateOld;
-
-        public string ListName
-        {
-            get => m_listName;
-            set => m_listName = value;
-        }
+        public string ListName { get; set; }
 
         public StateVector()
         { }
@@ -241,12 +193,12 @@ namespace StateVector
             }
         }
 
-        public StateVector(string listName, string startState, VectorEvent[] eventArray) : this(startState, eventArray) => m_listName = listName;
+        public StateVector(string listName, string startState, VectorEvent[] eventArray) : this(startState, eventArray) => ListName = listName;//m_listName = listName;
 
         public void GetListInfo()
         {
             foreach (var ins in m_eventList)
-                Debug.WriteLine($"{m_listName}:{ins.Tag} list[{ins.Index}].priority({ins.Priority}) {ins.Head} -> {ins.Tail} , {ins.Func.Method.Name}");
+                Debug.WriteLine($"{ListName}:{ins.Tag} list[{ins.Index}].priority({ins.Priority}) {ins.Head} -> {ins.Tail} , {ins.Func.Method.Name}");
         }
 
         public void Refresh(string stateNext)
@@ -254,20 +206,16 @@ namespace StateVector
             var list = new List<VectorEventBase>();
 
             if (EnableRegexp)
-            {
-                list = GetRegexp(m_stateNow, stateNext);
-            }
+                list = GetRegexp(StateNow, stateNext);
             else
-            {
-                list = GetHeadAndTali(m_stateNow, stateNext);
-            }
+                list = GetHeadAndTali(StateNow, stateNext);
 
             foreach (var ins in list)
             {
                 if (EnableRefreshTrace)
                 {
-                    Debug.Write(m_listName + " " + ins.Tag + " ");
-                    Debug.Write(m_stateNow + " -> " + stateNext);
+                    Debug.Write(ListName + " " + ins.Tag + " ");
+                    Debug.Write(StateNow + " -> " + stateNext);
                     Debug.Write(" do[" + ins.Index + "].priority(" + ins.Priority + ") " + ins.Func.Method.Name);
                 }
 
@@ -279,8 +227,8 @@ namespace StateVector
                 }
             }
 
-            m_stateOld = m_stateNow;
-            m_stateNow = stateNext;
+            StateOld = StateNow;
+            StateNow = stateNext;
         }
 
         protected List<VectorEventBase> GetHeadAndTali(string stateNow, string stateNext)
