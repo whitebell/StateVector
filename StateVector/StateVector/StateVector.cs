@@ -197,8 +197,8 @@ namespace StateVector
     /// </summary>
     public class StateVector
     {
-        public bool EnableRefreshTrace = false;
-        public bool EnableRegexp = false;
+        public bool EnableRefreshTrace;
+        public bool EnableRegexp;
         protected string m_stateNow;
         protected string m_stateOld;
         protected string m_listName;
