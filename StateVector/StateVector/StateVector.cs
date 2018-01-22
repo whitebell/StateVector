@@ -25,80 +25,38 @@ namespace StateVector
 
         public string Head
         {
-            get
-            {
-                return m_head;
-            }
-
-            set
-            {
-                m_head = value;
-            }
+            get => m_head;
+            set => m_head = value;
         }
 
         public string Tail
         {
-            get
-            {
-                return m_tail;
-            }
-
-            set
-            {
-                m_tail = value;
-            }
+            get => m_tail;
+            set => m_tail = value;
         }
 
         public string Tag
         {
-            get
-            {
-                return m_tag;
-            }
-
-            set
-            {
-                m_tag = value;
-            }
+            get => m_tag;
+            set => m_tag = value;
         }
 
         public VEFD Func
         {
-            get
-            {
-                return m_func;
-            }
-
-            set
-            {
-                m_func = value;
-            }
+            get => m_func;
+            set => m_func = value;
         }
 
         public int Priority
         {
-            get
-            {
-                return m_listPriority;
-            }
-
-            set
-            {
-                m_listPriority = value;
-            }
+            get => m_listPriority;
+            set => m_listPriority = value;
         }
 
         public int Index
         {
-            get
-            {
-                return m_listIndex;
-            }
-
-            set
-            {
-                m_listIndex = value;
-            }
+            get => m_listIndex;
+            set => m_listIndex = value;
         }
 
         public VectorEventBase()
@@ -127,13 +85,7 @@ namespace StateVector
     {
         protected List<string> m_list = new List<string>();
 
-        public string[] Array
-        {
-            get
-            {
-                return m_list.ToArray();
-            }
-        }
+        public string[] Array => m_list.ToArray();
 
         public VectorState(params string[] stateList)
         {
@@ -164,13 +116,7 @@ namespace StateVector
 
         protected List<VectorEventBase> m_vectorEventList = new List<VectorEventBase>();
 
-        public VectorEventBase[] Array
-        {
-            get
-            {
-                return m_vectorEventList.ToArray();
-            }
-        }
+        public VectorEventBase[] Array => m_vectorEventList.ToArray();
 
         public VectorEvent()
         { }
@@ -327,36 +273,16 @@ namespace StateVector
 
         public string StateNow
         {
-            get
-            {
-                return m_stateNow;
-            }
-
-            set
-            {
-                m_stateNow = value;
-            }
+            get => m_stateNow;
+            set => m_stateNow = value;
         }
 
-        public string StateOld
-        {
-            get
-            {
-                return m_stateOld;
-            }
-        }
+        public string StateOld => m_stateOld;
 
         public string ListName
         {
-            get
-            {
-                return m_listName;
-            }
-
-            set
-            {
-                m_listName = value;
-            }
+            get => m_listName;
+            set => m_listName = value;
         }
 
         public StateVector()
