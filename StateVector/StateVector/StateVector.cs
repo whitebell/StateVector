@@ -257,20 +257,7 @@ namespace StateVector
         public void GetListInfo()
         {
             foreach (var ins in m_eventList)
-            {
-                Debug.Write(m_listName + ":");
-                Debug.WriteLine(GetEventSetting(ins));
-            }
-        }
-
-        protected string GetEventSetting(VectorEventBase ins)
-        {
-            string ret = "";
-
-            ret = ins.Tag + " list[" + ins.Index + "].priority(" + ins.Priority + ") "
-                + ins.Head + " -> " + ins.Tail + " , " + ins.Func.Method.Name;
-
-            return ret;
+                Debug.WriteLine($"{m_listName}:{ins.Tag} list[{ins.Index}].priority({ins.Priority}) {ins.Head} -> {ins.Tail} , {ins.Func.Method.Name}");
         }
 
         public void Refresh(string stateNext)
