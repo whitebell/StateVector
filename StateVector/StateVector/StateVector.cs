@@ -127,7 +127,7 @@ namespace StateVector
 
         protected void Init(string[] headArray, string[] tailArray, string tag, params VEFD[] funcArray)
         {
-            foreach (string head in headArray)
+            foreach (var head in headArray)
             {
                 if (head == "")
                 {
@@ -140,7 +140,7 @@ namespace StateVector
 
         protected void Init(string[] headArray, string tail, string tag, params VEFD[] funcArray)
         {
-            foreach (string head in headArray)
+            foreach (var head in headArray)
             {
                 if (head == "")
                 {
@@ -153,7 +153,7 @@ namespace StateVector
 
         protected void Init(string head, string[] tailArray, string tag, params VEFD[] funcArray)
         {
-            foreach (string tail in tailArray)
+            foreach (var tail in tailArray)
             {
                 if (tail == "")
                 {
@@ -166,7 +166,7 @@ namespace StateVector
 
         protected void Init(string head, string tail, string tag, params VEFD[] funcArray)
         {
-            foreach (VEFD func in funcArray)
+            foreach (var func in funcArray)
             {
                 if (IsNullArgument(head, tail, tag, func))
                 {
@@ -181,7 +181,7 @@ namespace StateVector
         {
             bool ret = false;
 
-            foreach (object obj in objArray)
+            foreach (var obj in objArray)
             {
                 if (obj == null)
                 {
@@ -239,9 +239,9 @@ namespace StateVector
             StateNow = startState;
             m_eventList.Clear();
 
-            foreach (VectorEvent ve in eventArray)
+            foreach (var ve in eventArray)
             {
-                foreach (VectorEventBase ins in ve.Array)
+                foreach (var ins in ve.Array)
                 {
                     ins.Index = index;
                     ins.Priority = prioroty;
@@ -256,7 +256,7 @@ namespace StateVector
 
         public void GetListInfo()
         {
-            foreach (VectorEventBase ins in m_eventList)
+            foreach (var ins in m_eventList)
             {
                 Debug.Write(m_listName + ":");
                 Debug.WriteLine(GetEventSetting(ins));
@@ -275,7 +275,7 @@ namespace StateVector
 
         public void Refresh(string stateNext)
         {
-            List<VectorEventBase> list = new List<VectorEventBase>();
+            var list = new List<VectorEventBase>();
 
             if (EnableRegexp)
             {
@@ -286,7 +286,7 @@ namespace StateVector
                 list = GetHeadAndTali(m_stateNow, stateNext);
             }
 
-            foreach (VectorEventBase ins in list)
+            foreach (var ins in list)
             {
                 if (EnableRefreshTrace)
                 {
@@ -309,9 +309,9 @@ namespace StateVector
 
         protected List<VectorEventBase> GetHeadAndTali(string stateNow, string stateNext)
         {
-            List<VectorEventBase> ret = new List<VectorEventBase>();
+            var ret = new List<VectorEventBase>();
 
-            foreach (VectorEventBase ins in m_eventList)
+            foreach (var ins in m_eventList)
             {
                 if (stateNow == ins.Head)
                 {
@@ -327,9 +327,9 @@ namespace StateVector
 
         protected List<VectorEventBase> GetRegexp(string stateNow, string stateNext)
         {
-            List<VectorEventBase> ret = new List<VectorEventBase>();
+            var ret = new List<VectorEventBase>();
 
-            foreach (VectorEventBase ins in m_eventList)
+            foreach (var ins in m_eventList)
             {
                 if (Regex.IsMatch(stateNow, ins.Head))
                 {
