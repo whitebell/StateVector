@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 namespace StateVector
 {
-    using VEFD = VectorEventFuncDelegate;
     using VEB = VectorEventBase;
     using VE = VectorEvent;
 

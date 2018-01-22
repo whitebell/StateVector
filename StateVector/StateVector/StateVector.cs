@@ -1,38 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace StateVector
 {
-    using System.Text.RegularExpressions;
-    using VEFD = VectorEventFuncDelegate;
-
-    public delegate void VectorEventFuncDelegate();
 
     public class VectorEventBase
     {
         public string Head { get; set; }
         public string Tail { get; set; }
         public string Tag { get; set; }
-        public VEFD Func { get; set; }
+        public Action Func { get; set; }
         public int Priority { get; set; } = -1;
         public int Index { get; set; } = -1;
 
         public VectorEventBase()
         { }
 
-        public VectorEventBase(string head, string tail, VEFD func)
+        public VectorEventBase(string head, string tail, Action func)
         {
             Head = head;
             Tail = tail;
             Func = func;
         }
 
-        public VectorEventBase(string head, string tail, string tag, VEFD func) : this(head, tail, func) => Tag = tag;
+        public VectorEventBase(string head, string tail, string tag, Action func) : this(head, tail, func) => Tag = tag;
     }
 
     public class VectorState
@@ -65,31 +58,31 @@ namespace StateVector
         public VectorEvent()
         { }
 
-        public VectorEvent(string head, string tail, params VEFD[] funcArray) => Init(head, tail, "", funcArray);
+        public VectorEvent(string head, string tail, params Action[] funcArray) => Init(head, tail, "", funcArray);
 
-        public VectorEvent(VectorHead head, string tail, params VEFD[] funcArray) => Init(head.Array, tail, "", funcArray);
+        public VectorEvent(VectorHead head, string tail, params Action[] funcArray) => Init(head.Array, tail, "", funcArray);
 
-        public VectorEvent(string head, VectorTail tail, params VEFD[] funcArray) => Init(head, tail.Array, "", funcArray);
+        public VectorEvent(string head, VectorTail tail, params Action[] funcArray) => Init(head, tail.Array, "", funcArray);
 
-        public VectorEvent(VectorHead head, VectorTail tail, params VEFD[] funcArray) => Init(head.Array, tail.Array, "", funcArray);
+        public VectorEvent(VectorHead head, VectorTail tail, params Action[] funcArray) => Init(head.Array, tail.Array, "", funcArray);
 
-        public VectorEvent(string head, string tail, string tag, params VEFD[] funcArray) => Init(head, tail, tag, funcArray);
+        public VectorEvent(string head, string tail, string tag, params Action[] funcArray) => Init(head, tail, tag, funcArray);
 
-        public VectorEvent(VectorHead head, string tail, string tag, params VEFD[] funcArray) => Init(head.Array, tail, tag, funcArray);
+        public VectorEvent(VectorHead head, string tail, string tag, params Action[] funcArray) => Init(head.Array, tail, tag, funcArray);
 
-        public VectorEvent(string head, VectorTail tail, string tag, params VEFD[] funcArray) => Init(head, tail.Array, tag, funcArray);
+        public VectorEvent(string head, VectorTail tail, string tag, params Action[] funcArray) => Init(head, tail.Array, tag, funcArray);
 
-        public VectorEvent(VectorHead head, VectorTail tail, string tag, params VEFD[] funcArray) => Init(head.Array, tail.Array, tag, funcArray);
+        public VectorEvent(VectorHead head, VectorTail tail, string tag, params Action[] funcArray) => Init(head.Array, tail.Array, tag, funcArray);
 
         public static VectorHead HeadOr(params string[] head) => new VectorHead(head);
 
         public static VectorTail TailOr(params string[] tail) => new VectorTail(tail);
 
-        public static VEFD Func(VEFD func) => func;
+        public static Action Func(Action func) => func;
 
-        public static VEFD[] FuncArray(params VEFD[] funcArray) => funcArray;
+        public static Action[] FuncArray(params Action[] funcArray) => funcArray;
 
-        protected void Init(string[] headArray, string[] tailArray, string tag, params VEFD[] funcArray)
+        protected void Init(string[] headArray, string[] tailArray, string tag, params Action[] funcArray)
         {
             foreach (var head in headArray)
             {
@@ -102,7 +95,7 @@ namespace StateVector
             }
         }
 
-        protected void Init(string[] headArray, string tail, string tag, params VEFD[] funcArray)
+        protected void Init(string[] headArray, string tail, string tag, params Action[] funcArray)
         {
             foreach (var head in headArray)
             {
@@ -115,7 +108,7 @@ namespace StateVector
             }
         }
 
-        protected void Init(string head, string[] tailArray, string tag, params VEFD[] funcArray)
+        protected void Init(string head, string[] tailArray, string tag, params Action[] funcArray)
         {
             foreach (var tail in tailArray)
             {
@@ -128,7 +121,7 @@ namespace StateVector
             }
         }
 
-        protected void Init(string head, string tail, string tag, params VEFD[] funcArray)
+        protected void Init(string head, string tail, string tag, params Action[] funcArray)
         {
             if (head == null)
                 throw new ArgumentNullException(nameof(head));
