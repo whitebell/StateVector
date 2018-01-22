@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 
 namespace StateVector
 {
-
     public class VectorEventBase
     {
         public string Head { get; set; }
@@ -86,10 +85,8 @@ namespace StateVector
         {
             foreach (var head in headArray)
             {
-                if (head == "")
-                {
+                if (String.IsNullOrEmpty(head))
                     throw new ArgumentException("head array contains \"\"");
-                }
 
                 Init(head, tailArray, tag, funcArray);
             }
@@ -99,10 +96,8 @@ namespace StateVector
         {
             foreach (var head in headArray)
             {
-                if (head == "")
-                {
+                if (String.IsNullOrEmpty(head))
                     throw new ArgumentException("head array contains \"\"");
-                }
 
                 Init(head, tail, tag, funcArray);
             }
@@ -112,7 +107,7 @@ namespace StateVector
         {
             foreach (var tail in tailArray)
             {
-                if (tail == "")
+                if (String.IsNullOrEmpty(tail))
                 {
                     throw new ArgumentException("tail array contains \"\"");
                 }
