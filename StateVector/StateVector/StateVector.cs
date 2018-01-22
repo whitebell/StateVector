@@ -289,13 +289,8 @@ namespace StateVector
 
             foreach (var ins in m_eventList)
             {
-                if (stateNow == ins.Head)
-                {
-                    if (stateNext == ins.Tail)
-                    {
-                        ret.Add(ins);
-                    }
-                }
+                if (stateNow == ins.Head && stateNext == ins.Tail)
+                    ret.Add(ins);
             }
 
             return ret;
@@ -307,13 +302,8 @@ namespace StateVector
 
             foreach (var ins in m_eventList)
             {
-                if (Regex.IsMatch(stateNow, ins.Head))
-                {
-                    if (Regex.IsMatch(stateNext, ins.Tail))
-                    {
-                        ret.Add(ins);
-                    }
-                }
+                if (Regex.IsMatch(stateNow, ins.Head) && Regex.IsMatch(stateNext, ins.Tail))
+                    ret.Add(ins);
             }
 
             return ret;
