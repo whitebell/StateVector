@@ -181,7 +181,7 @@ namespace StateVector
             }
         }
 
-        public StateVector(string listName, string startState, VectorEvent[] eventArray) : this(startState, eventArray) => ListName = listName;//m_listName = listName;
+        public StateVector(string listName, string startState, VectorEvent[] eventArray) : this(startState, eventArray) => ListName = listName;
 
         public void GetListInfo()
         {
