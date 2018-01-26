@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
@@ -31,7 +32,7 @@ namespace StateVector
     {
         protected List<string> m_list = new List<string>();
 
-        public string[] Array => m_list.ToArray();
+        public ReadOnlyCollection<string> Collection => new ReadOnlyCollection<string>(m_list);
 
         public VectorState(params string[] stateList) => m_list.AddRange(stateList);
     }
@@ -52,26 +53,26 @@ namespace StateVector
     {
         protected List<VectorEventBase> m_vectorEventList = new List<VectorEventBase>();
 
-        public VectorEventBase[] Array => m_vectorEventList.ToArray();
+        public ReadOnlyCollection<VectorEventBase> Collection => new ReadOnlyCollection<VectorEventBase>(m_vectorEventList);
 
         public VectorEvent()
         { }
 
         public VectorEvent(string head, string tail, params Action[] funcArray) => Init(head, tail, "", funcArray);
 
-        public VectorEvent(VectorHead head, string tail, params Action[] funcArray) => Init(head.Array, tail, "", funcArray);
+        public VectorEvent(VectorHead head, string tail, params Action[] funcArray) => Init(head.Collection, tail, "", funcArray);
 
-        public VectorEvent(string head, VectorTail tail, params Action[] funcArray) => Init(head, tail.Array, "", funcArray);
+        public VectorEvent(string head, VectorTail tail, params Action[] funcArray) => Init(head, tail.Collection, "", funcArray);
 
-        public VectorEvent(VectorHead head, VectorTail tail, params Action[] funcArray) => Init(head.Array, tail.Array, "", funcArray);
+        public VectorEvent(VectorHead head, VectorTail tail, params Action[] funcArray) => Init(head.Collection, tail.Collection, "", funcArray);
 
         public VectorEvent(string head, string tail, string tag, params Action[] funcArray) => Init(head, tail, tag, funcArray);
 
-        public VectorEvent(VectorHead head, string tail, string tag, params Action[] funcArray) => Init(head.Array, tail, tag, funcArray);
+        public VectorEvent(VectorHead head, string tail, string tag, params Action[] funcArray) => Init(head.Collection, tail, tag, funcArray);
 
-        public VectorEvent(string head, VectorTail tail, string tag, params Action[] funcArray) => Init(head, tail.Array, tag, funcArray);
+        public VectorEvent(string head, VectorTail tail, string tag, params Action[] funcArray) => Init(head, tail.Collection, tag, funcArray);
 
-        public VectorEvent(VectorHead head, VectorTail tail, string tag, params Action[] funcArray) => Init(head.Array, tail.Array, tag, funcArray);
+        public VectorEvent(VectorHead head, VectorTail tail, string tag, params Action[] funcArray) => Init(head.Collection, tail.Collection, tag, funcArray);
 
         public static VectorHead HeadOr(params string[] head) => new VectorHead(head);
 
@@ -81,7 +82,7 @@ namespace StateVector
 
         public static Action[] FuncArray(params Action[] funcArray) => funcArray;
 
-        protected void Init(string[] headArray, string[] tailArray, string tag, params Action[] funcArray)
+        protected void Init(IList<string> headArray, IList<string> tailArray, string tag, params Action[] funcArray)
         {
             foreach (var head in headArray)
             {
@@ -92,7 +93,7 @@ namespace StateVector
             }
         }
 
-        protected void Init(string[] headArray, string tail, string tag, params Action[] funcArray)
+        protected void Init(IList<string> headArray, string tail, string tag, params Action[] funcArray)
         {
             foreach (var head in headArray)
             {
@@ -103,7 +104,7 @@ namespace StateVector
             }
         }
 
-        protected void Init(string head, string[] tailArray, string tag, params Action[] funcArray)
+        protected void Init(string head, IList<string> tailArray, string tag, params Action[] funcArray)
         {
             foreach (var tail in tailArray)
             {
@@ -170,7 +171,7 @@ namespace StateVector
 
             foreach (var ve in eventArray)
             {
-                foreach (var ins in ve.Array)
+                foreach (var ins in ve.Collection)
                 {
                     ins.Index = index;
                     ins.Priority = prioroty;
